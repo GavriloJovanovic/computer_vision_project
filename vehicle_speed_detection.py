@@ -6,12 +6,25 @@ import numpy as np
 # Load the video file
 video_path = "car_video.mp4"
 cap = cv2.VideoCapture(video_path)
+fps = cap.get(cv2.CAP_PROP_FPS)
 
 # Load YOLOv8 model
 yolo_model = YOLO("yolov8n.pt")
 
 # Initialize sort
 tracker = Sort()
+
+
+# function for calculating the speed of the vehicle
+def estimate_speed(track_history, fps):
+    if len(track_history) < 2:
+        return 0
+
+    x1, y1 = track_history[-2]
+    x2, y2 = track_history[-1]
+    distance = np.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
+    return distance * fps
+
 
 # COCO class labels relevant to motor vehicles
 MOTOR_VEHICLES_DICT = {
@@ -24,6 +37,11 @@ MOTOR_VEHICLES_DICT = {
 if not cap.isOpened():
     print("Error: Cannot open video file.")
     exit()
+
+# Vehicle histories and speeds
+vehicle_speeds = {}
+vehicle_histories = {}
+
 
 while True:
     ret, frame = cap.read()
@@ -55,10 +73,21 @@ while True:
     # Draw tracked bounding boxes with unique IDs
     for obj in tracked_objects:
         x1, y1, x2, y2, track_id = map(int, obj)
+        center = ((x1 + x2) // 2, (y1 + y2) // 2)
+
+        if track_id not in vehicle_histories:
+            vehicle_histories[track_id] = []
+
+        vehicle_histories[track_id].append(center)
+        speed = estimate_speed(vehicle_histories[track_id], fps)
+        vehicle_speeds[track_id] = speed
+
         # Blue box for tracking
         cv2.rectangle(frame, (x1, y1), (x2, y2), (255, 0, 0), 2)
-        cv2.putText(frame, f"ID {track_id}", (x1, y1 - 10),
-                    cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 0), 2)
+        cv2.putText(frame,
+                    f"ID {track_id} | {int(vehicle_speeds[track_id])} px/s",
+                    (x1, y1 - 10),
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
 
     cv2.imshow("Motor Vehicle Detection", frame)
 
