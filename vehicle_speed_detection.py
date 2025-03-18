@@ -46,6 +46,15 @@ while True:
 
     detections = [] # Store detected vehicles
 
+    # Find the fastest vehicle
+    fastest_vehicle = None
+    max_speed = 0
+
+    for track_id, speed in vehicle_speeds.items():
+        if speed > max_speed:
+            max_speed = speed
+            fastest_vehicle = track_id
+
     for result in results:
         for box, cls, conf, track_id in zip(result.boxes.xyxy,
                                             result.boxes.cls,
@@ -68,12 +77,20 @@ while True:
                 speed = estimate_speed(vehicle_histories[track_id], fps)
                 vehicle_speeds[track_id] = speed
 
-                # Blue box for tracking
-                cv2.rectangle(frame, (x1, y1), (x2, y2), (255, 0, 0), 2)
-                cv2.putText(frame,
-                            f"ID {track_id} | {int(vehicle_speeds[track_id])} px/s",
-                            (x1, y1 - 10),
-                            cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+                # Highlight the fastest vehicle in red
+                if track_id == fastest_vehicle:
+                    cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 0, 255), 2)  # Red box
+                    cv2.putText(frame,
+                                f"FASTEST ID {track_id} | {int(vehicle_speeds[track_id])} px/s",
+                                (x1, y1 - 10),
+                                cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 255), 2)
+                else:
+                    # Blue Box for tracking
+                    cv2.rectangle(frame, (x1, y1), (x2, y2), (255, 0, 0), 2)  # Blue box
+                    cv2.putText(frame,
+                                f"ID {track_id} | {int(vehicle_speeds[track_id])} px/s",
+                                (x1, y1 - 10),
+                                cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
 
     cv2.imshow("Motor Vehicle Detection", frame)
 
