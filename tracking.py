@@ -20,7 +20,7 @@ class VehicleTracker:
         self.vehicle_start_time = {}   # Tracks the time when a vehicle appears
         self.vehicle_best_frame = {}  # Tracks the best frame for each vehicle
         self.vehicle_last_box = {}  # Stores last known bounding box of each vehicle
-        self.vehicle_max_width = {}  # Stores max width for each vehicle
+        self.vehicle_best_confidence = {}  # Stores the best confidence score
 
     def process_frame(self, frame, current_time):
         """Process a single video frame and track vehicles."""
@@ -37,10 +37,10 @@ class VehicleTracker:
 
                 x1, y1, x2, y2 = map(int, box)
                 track_id = int(track_id)
-                # Check the width of the vehicle
-                vehicle_width = x2 - x1
                 # Store the center of the vehicle
                 center = ((x1 + x2) // 2, (y1 + y2) // 2)
+
+                confidence = float(conf)  # Extract confidence score
 
                 # Initialize tracking data
                 if track_id not in self.vehicle_histories:
@@ -52,15 +52,17 @@ class VehicleTracker:
                     self.vehicle_start_time[track_id] = current_time
                     self.vehicle_best_frame[track_id] = frame.copy()
                     self.vehicle_last_box[track_id] = (x1, y1, x2, y2)
-                    self.vehicle_max_width[track_id] = vehicle_width
+                    # Initialize confidence score
+                    self.vehicle_best_confidence[track_id] = confidence
 
                 self.vehicle_histories[track_id].append(center)
 
-                # If the current width is larger than the last stored width,
-                # update the best frame
-                if vehicle_width > self.vehicle_max_width[track_id]:
+                # Update the best frame based on confidence score
+                if confidence > self.vehicle_best_confidence[track_id]:
                     self.vehicle_best_frame[track_id] = frame.copy()
-                    self.vehicle_max_width[track_id] = vehicle_width
+                    self.vehicle_last_box[track_id] = (x1, y1, x2, y2)
+                    # Update best confidence score
+                    self.vehicle_best_confidence[track_id] = confidence
 
                 # Speed calculation
                 speed = estimate_speed(self.vehicle_histories[track_id], self.fps)
@@ -77,7 +79,8 @@ class VehicleTracker:
 
                 # Blue Box for tracking
                 cv2.rectangle(frame, (x1, y1), (x2, y2), (255, 0, 0), 2)
-                cv2.putText(frame, f"ID {track_id} | {int(speed)} px/s",
+                cv2.putText(frame, f"ID {track_id} | {int(speed)} px/s"
+                                   f" | {confidence:.2f}",
                             (x1, y1 - 10),
                             cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
 

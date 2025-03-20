@@ -23,7 +23,7 @@ cd computer_vision_project
 ### 2. Install dependencies
 First, create a virtual environment (optional but recommended):
 ```bash
-python -m venv venv
+python -m venv venv # Or python3
 source venv/bin/activate  # On macOS/Linux
 venv\Scripts\activate    # On Windows
 ```
@@ -33,7 +33,7 @@ pip install -r requirements.txt
 ```
 
 ## Download the Video File
-The project does not contain the video file due to storage limitations. You need to download it manually from the following link:
+You need to download it manually from the following link:
 [Download Video](https://drive.google.com/file/d/1GoH1bOYnt8cqBtFbYjFPqqruG1Gncaav/view)
 
 Save the downloaded file as `car_video.mp4` in the project root directory.
@@ -42,7 +42,7 @@ Save the downloaded file as `car_video.mp4` in the project root directory.
 
 To start the vehicle detection and speed estimation, run:
 ```bash
-python main.py
+python main.py # or python3
 ```
 
 The program will:
