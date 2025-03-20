@@ -51,7 +51,7 @@ class VehicleTracker:
                 # Initialize tracking data
                 if track_id not in self.vehicle_histories:
                     self.vehicle_histories[track_id] = []
-                    self.vehicle_stats[track_id] = {'min_speed': float('inf'),
+                    self.vehicle_stats[track_id] = {'min_speed': 0,
                                                     'max_speed': 0,
                                                     'sum_speed': 0,
                                                     'count': 0}
@@ -75,8 +75,12 @@ class VehicleTracker:
 
                 # Update vehicle statistics
                 if speed > 0:
-                    self.vehicle_stats[track_id]['min_speed'] = \
-                        min(self.vehicle_stats[track_id]['min_speed'], speed)
+                    # First valid speed update
+                    if self.vehicle_stats[track_id]['min_speed'] == 0:
+                        self.vehicle_stats[track_id]['min_speed'] = speed
+                    else:
+                        self.vehicle_stats[track_id]['min_speed'] = \
+                            min(self.vehicle_stats[track_id]['min_speed'], speed)
 
                 self.vehicle_stats[track_id]['max_speed'] = \
                     max(self.vehicle_stats[track_id]['max_speed'], speed)

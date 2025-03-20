@@ -102,7 +102,7 @@
         "count": 13
     },
     "180": {
-        "min_speed": Infinity,
+        "min_speed": 0,
         "max_speed": 0,
         "sum_speed": 0,
         "count": 1
@@ -240,7 +240,7 @@
         "count": 47
     },
     "432": {
-        "min_speed": Infinity,
+        "min_speed": 0,
         "max_speed": 0,
         "sum_speed": 0,
         "count": 1
@@ -282,7 +282,7 @@
         "count": 3
     },
     "514": {
-        "min_speed": Infinity,
+        "min_speed": 0,
         "max_speed": 0,
         "sum_speed": 0,
         "count": 1
@@ -324,7 +324,7 @@
         "count": 3
     },
     "552": {
-        "min_speed": Infinity,
+        "min_speed": 0,
         "max_speed": 0,
         "sum_speed": 0,
         "count": 1
@@ -510,7 +510,7 @@
         "count": 34
     },
     "814": {
-        "min_speed": Infinity,
+        "min_speed": 0,
         "max_speed": 0,
         "sum_speed": 0,
         "count": 1
@@ -654,7 +654,7 @@
         "count": 16
     },
     "996": {
-        "min_speed": Infinity,
+        "min_speed": 0,
         "max_speed": 0,
         "sum_speed": 0,
         "count": 1
@@ -678,7 +678,7 @@
         "count": 63
     },
     "1023": {
-        "min_speed": Infinity,
+        "min_speed": 0,
         "max_speed": 0,
         "sum_speed": 0,
         "count": 1
@@ -1194,7 +1194,7 @@
         "count": 32
     },
     "1605": {
-        "min_speed": Infinity,
+        "min_speed": 0,
         "max_speed": 0,
         "sum_speed": 0,
         "count": 1
@@ -1230,7 +1230,7 @@
         "count": 22
     },
     "1673": {
-        "min_speed": Infinity,
+        "min_speed": 0,
         "max_speed": 0,
         "sum_speed": 0,
         "count": 1
@@ -1296,7 +1296,7 @@
         "count": 10
     },
     "1747": {
-        "min_speed": Infinity,
+        "min_speed": 0,
         "max_speed": 0,
         "sum_speed": 0,
         "count": 1
@@ -1416,7 +1416,7 @@
         "count": 14
     },
     "1884": {
-        "min_speed": Infinity,
+        "min_speed": 0,
         "max_speed": 0,
         "sum_speed": 0,
         "count": 1

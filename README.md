@@ -43,9 +43,9 @@ Save the downloaded file as `car_video.mp4` in the project root directory.
 To start the vehicle detection and speed estimation, run:
 ```bash
 # With specific values
-python main.py --video car_video.mp4 --model yolov8n.pt --output results.json # or python3
+python src/main.py --video car_video.mp4 --model yolov8n.pt --output results.json # or python3
 # With default values
-python main.py --video car_video.mp4 # or python3
+python src/main.py --video car_video.mp4 # or python3
 ```
 
 The program will:
@@ -61,7 +61,7 @@ The program will:
 
 ## Project Structure
 ```
-computer_vision_project/
+computer_vision_project/src/
 │── main.py              # Main entry point of the project
 │── tracking.py          # Handles vehicle detection and tracking
 │── processing.py        # Processes video frames and calls the tracker
