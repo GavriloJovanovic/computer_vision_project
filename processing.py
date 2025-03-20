@@ -3,15 +3,14 @@
 import cv2
 from tracking import VehicleTracker
 from utils import save_json
-from config import VIDEO_PATH, MODEL_PATH, OUTPUT_JSON
 
 
-def detect_vehicles():
+def detect_vehicles(video_path, model_path, output_json):
     """Detect and track vehicles in the video."""
-    cap = cv2.VideoCapture(VIDEO_PATH)
+    cap = cv2.VideoCapture(video_path)
     fps = cap.get(cv2.CAP_PROP_FPS)
 
-    tracker = VehicleTracker(VIDEO_PATH, MODEL_PATH, fps)
+    tracker = VehicleTracker(video_path, model_path, fps)
 
     while True:
         ret, frame = cap.read()
@@ -28,6 +27,6 @@ def detect_vehicles():
     cv2.destroyAllWindows()
 
     # Save vehicle speed data
-    save_json(tracker.vehicle_stats, OUTPUT_JSON)
+    save_json(tracker.vehicle_stats, output_json)
 
     return tracker

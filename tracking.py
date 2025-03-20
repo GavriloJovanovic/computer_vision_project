@@ -2,8 +2,14 @@
 
 import cv2
 from ultralytics import YOLO
-from config import MOTOR_VEHICLES_DICT
 from utils import estimate_speed
+
+MOTOR_VEHICLES_DICT = {
+    2: "Car",
+    3: "Motorcycle",
+    5: "Bus",
+    7: "Truck"
+}
 
 
 class VehicleTracker:

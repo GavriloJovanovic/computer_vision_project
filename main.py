@@ -3,6 +3,20 @@
 from processing import detect_vehicles
 import cv2
 
+import argparse
+
+
+def parse_args():
+    parser = argparse.ArgumentParser(description="Vehicle Speed Analysis "
+                                                 "using YOLO and OpenCV.")
+    parser.add_argument("--video", type=str, required=True,
+                        help="Path to the input video file.")
+    parser.add_argument("--model", type=str, default="yolov8n.pt",
+                        help="Path to the YOLO model file.")
+    parser.add_argument("--output", type=str, default="vehicle_speeds.json",
+                        help="Path to the output JSON file.")
+    return parser.parse_args()
+
 
 def save_fastest_vehicle_image(tracker):
     """Save an image of the fastest vehicle detected."""
@@ -23,8 +37,10 @@ def save_fastest_vehicle_image(tracker):
 if __name__ == "__main__":
     print("Starting vehicle speed detection...")
 
-    # Start detection of vehicles on the mp4
-    tracker = detect_vehicles()
+    args = parse_args()
+
+    # Start detection of vehicles on the given video
+    tracker = detect_vehicles(args.video, args.model, args.output)
 
     # Wait for the image of the fastest vehicle
     fastest_vehicle_id = save_fastest_vehicle_image(tracker)
