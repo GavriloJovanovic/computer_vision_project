@@ -1,4 +1,4 @@
-# Computer vision project
+# Vehicle Speed Analysis using Computer Vision
 
 This project detects and tracks vehicles in a video, estimates their speed, and identifies the fastest vehicle. It uses OpenCV and YOLO for vehicle detection and tracking.
 
@@ -20,14 +20,19 @@ git clone https://github.com/GavriloJovanovic/computer_vision_project.git
 cd computer_vision_project
 ```
 
-### 2. Install dependencies
-First, create a virtual environment (optional but recommended):
+### 2. Create a virtual environment (optional but recommended)
+#### On **Windows**:
 ```bash
-python -m venv venv # Or python3
-source venv/bin/activate  # On macOS/Linux
-venv\Scripts\activate    # On Windows
+python -m venv venv
+venv\Scripts\activate
 ```
-Then install the required packages:
+#### On **macOS/Linux**:
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
+
+### 3. Install dependencies
 ```bash
 pip install -r requirements.txt
 ```
@@ -41,11 +46,24 @@ Save the downloaded file as `car_video.mp4` in the project root directory.
 ## Running the Project
 
 To start the vehicle detection and speed estimation, run:
+
+#### On **Windows**:
 ```bash
-# With specific values
-python src/main.py --video car_video.mp4 --model yolov8n.pt --output results.json # or python3
-# With default values
-python src/main.py --video car_video.mp4 # or python3
+python src\main.py --video car_video.mp4
+```
+
+#### On **macOS/Linux**:
+```bash
+python3 src/main.py --video car_video.mp4
+```
+
+Optional arguments:
+- `--model`: Path to YOLO model (default: `yolov8n.pt`)
+- `--output`: Path to JSON output file (default: `vehicle_speeds.json`)
+
+Example with custom parameters:
+```bash
+python3 src/main.py --video car_video.mp4 --model yolov8n.pt --output results.json
 ```
 
 The program will:
@@ -61,12 +79,14 @@ The program will:
 
 ## Project Structure
 ```
-computer_vision_project/src/
-│── main.py              # Main entry point of the project
-│── tracking.py          # Handles vehicle detection and tracking
-│── processing.py        # Processes video frames and calls the tracker
-│── utils.py             # Utility functions (speed estimation, JSON handling)
-│── requirements.txt     # Required dependencies
+computer_vision_project/
+├── src/
+│   ├── main.py            # Main entry point of the project
+│   ├── tracking.py        # Handles vehicle detection and tracking
+│   ├── processing.py      # Processes video frames and calls the tracker
+│   ├── utils.py           # Utility functions (speed estimation, JSON handling)
+├── requirements.txt       # Required dependencies
+├── car_video.mp4		   # Video file
 ```
 
 ## Notes
